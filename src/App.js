@@ -31,7 +31,6 @@ import './App.css';
  */
 
  /** TODO
- * - Only focus when editing lists AND adding new (not on delete)
  * - Create sets of lists to use for the game 
  * - Create game probabaly as modal full screen???????
  * - Method for pulling test data and real data into the application

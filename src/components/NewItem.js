@@ -9,7 +9,8 @@ class NewItem extends React.Component {
     super(props);
     this.inputRef = React.createRef();
     this.state = {
-      value: ''
+      value: '',
+      submitted:false //used to ensure that the focus returns to the input only on submit
     }
   }
 
@@ -21,13 +22,17 @@ class NewItem extends React.Component {
     this.setState({value:this.state.value.replace(/\s/g, "")});
     if (this.state.value.replace(/\s/g, "")){
       this.props.addNewItem(this.state.value);
+      this.setState({submitted:true});
     }
     this.setState({value:""});
     event.preventDefault();
   }  
 
   componentDidUpdate() {
-    this.inputRef.current.focus();
+    if (this.state.submitted) {
+      this.inputRef.current.focus();
+      this.setState({submitted:false});
+    }
   }
 
   render() {
