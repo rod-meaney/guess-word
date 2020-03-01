@@ -3,6 +3,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FormGroup from 'react-bootstrap/FormGroup';
+import Col from 'react-bootstrap/Col';
 
 class NewItem extends React.Component {
   constructor(props){
@@ -38,20 +39,26 @@ class NewItem extends React.Component {
   render() {
     return (
       <Form className="mt-3" onSubmit={this.handleSubmit.bind(this)}>
-        <FormGroup>
-          <Form.Control 
-            type="text" 
-            required placeholder="Enter new item" 
-            value={this.state.value} 
-            onChange={this.handleChange.bind(this)}
-            ref={this.inputRef}
-          >
-          </Form.Control>  
-          <Form.Control.Feedback type="invalid">
-              Please enter text before adding
-          </Form.Control.Feedback>
-        </FormGroup>
-        <Button type="submit" >Add</Button> 
+        <Form.Row>
+          <Col>
+            <FormGroup>
+              <Form.Control 
+                type="text" 
+                required placeholder="Enter new item" 
+                value={this.state.value} 
+                onChange={this.handleChange.bind(this)}
+                ref={this.inputRef}
+              >
+              </Form.Control>  
+              <Form.Control.Feedback type="invalid">
+                  Please enter text before adding
+              </Form.Control.Feedback>
+            </FormGroup>
+          </Col>
+          <Col xs={4}>
+            <Button type="submit" >Add</Button> 
+          </Col>
+        </Form.Row>
       </Form>
     )    
   }

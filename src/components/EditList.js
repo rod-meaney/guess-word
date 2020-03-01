@@ -18,7 +18,8 @@ class EditList extends React.Component {
 
   addItem(newText){
     this.setState({
-      list:this.state.list.concat({id:this.state.nextId, name:newText}),
+      //list:this.state.list.concat({name:newText, id:this.state.nextId}),
+      list:[{name:newText, id:this.state.nextId}].concat(this.state.list),
       nextId:this.state.nextId+1
     });
   }
@@ -26,6 +27,7 @@ class EditList extends React.Component {
   render() {
     return (
       <div>
+        <NewItem addNewItem={this.addItem.bind(this)} />
         <ListGroup>
           {this.state.list.map(item => (
             <ListGroup.Item key={item.id}>
@@ -36,7 +38,6 @@ class EditList extends React.Component {
             </ListGroup.Item>
           ))}
         </ListGroup>
-        <NewItem addNewItem={this.addItem.bind(this)} />
       </div>
     )    
   }
