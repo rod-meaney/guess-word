@@ -5,6 +5,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import EditList from './components/EditList';
 import Home from './components/Home';
+import GuessList from './components/GuessList';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -31,7 +33,7 @@ import './App.css';
  */
 
  /** TODO
- * - Create sets of lists to use for the game 
+ * - Create sets of lists to use for the game as test data and mocking gets that are not part of the build
  * - Create game probabaly as modal full screen???????
  * - Method for pulling test data and real data into the application
  * - Updating the data
@@ -56,6 +58,9 @@ class App extends React.Component{
             <Route path="/edit-list">
               <EditList list={workingList}/>
             </Route>
+            <Route path="/temp-play">
+              <GuessList />
+            </Route>                       
             <Route path="/">
               <Home />
             </Route>
