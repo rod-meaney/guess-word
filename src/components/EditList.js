@@ -1,6 +1,6 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { XSquare } from 'react-bootstrap-icons';
+import { XSquareFill } from 'react-bootstrap-icons';
 import NewItem from './NewItem';
 
 class EditList extends React.Component {
@@ -33,7 +33,7 @@ class EditList extends React.Component {
             <ListGroup.Item key={item.id}>
               {item.name}
               <span className="float-right">
-                <XSquare onClick={() => this.deleteItem(item.id)} />
+                <XSquareFill color="red" size={30} onClick={() => this.deleteItem(item.id)} />
               </span>
             </ListGroup.Item>
           ))}

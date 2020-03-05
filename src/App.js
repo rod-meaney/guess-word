@@ -5,7 +5,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import EditList from './components/EditList';
 import Home from './components/Home';
-import GuessList from './components/GuessList';
+import Game from './components/Game';
+import AvailableGames from './components/AvailableGames';
 
 import {
   BrowserRouter as Router,
@@ -58,9 +59,15 @@ class App extends React.Component{
             <Route path="/edit-list">
               <EditList list={workingList}/>
             </Route>
+            <Route path="/play/:id">
+              <Game />
+            </Route>
+            <Route path="/game-list">
+              <AvailableGames />
+            </Route>           
             <Route path="/temp-play">
-              <GuessList />
-            </Route>                       
+              <Game />
+            </Route>               
             <Route path="/">
               <Home />
             </Route>

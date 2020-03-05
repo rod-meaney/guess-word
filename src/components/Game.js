@@ -6,8 +6,9 @@ import Countdown from 'react-countdown'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
-import "./GuessList.css"
-
+import { StarFill, TrashFill } from 'react-bootstrap-icons';
+import "./Game.css"
+import { Link } from 'react-router-dom';
 
 class GameScreen extends React.Component {
   constructor(props){
@@ -52,15 +53,17 @@ class GameScreen extends React.Component {
   }
 }
 
-class GuessList extends React.Component {
+class Game extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       id: '1',
       name: 'Silmarillion words',
       description: 'Words from the Tolkein book the Silmarillion.',
-      allWords: ['Morgoth', "Feanor", "Fingolfin", "Ungoliant", "eren and Luthian", "Bleesed Isles", "Sauron", "Balrog", "Glaurung"],
+      allWords: ['Morgoth', "Feanor", "Fingolfin", "Ungoliant", "Eren and Luthian", "Bleesed Isles", "Sauron", "Balrog", "Glaurung"],
       wordsRemaining: [],
+      guessedCorrect:0,
+      guessedWrong:0,
       guessedWords:[],
       phase:"screen",
       currentWord:"",
@@ -91,22 +94,36 @@ class GuessList extends React.Component {
   }
 
   handleCorrect() {
+    this.state.guessedWords.push({"word":this.state.currentWord, "result":true});
+    this.setState({guessedCorrect:this.state.guessedCorrect+1});
     this.pickNextWord();
   }
 
   handleWrong() {
+    this.state.guessedWords.push({"word":this.state.currentWord, "result":false})
+    this.setState({guessedWrong:this.state.guessedWrong+1});
     this.pickNextWord();
   }
 
+  resultIcon(answer) {
+    return (answer ? <StarFill className="text-success sz-md" /> : <TrashFill className="text-danger" />);
+  }
+
   finishScreen() {
-    return(
+    return (
       <Card>
         <Card.Body>
           <Card.Title>{this.state.name}</Card.Title>
-          <Card.Text>You have finished, your results are:</Card.Text>
-            <Button variant="primary" onClick={() => this.setState({phase:"screen"})}>Play again</Button>
-            {" "}
-            <Button variant="primary" >Back to games list</Button>
+          <h2>Score : {this.state.guessedCorrect}</h2>
+          <p>
+            {this.state.guessedWords.map((item,index) => (
+              <span key={index}>
+                {this.resultIcon(item.result)} {item.word}<br />
+              </span>
+            ))}
+          </p>
+          <Button variant="primary" onClick={() => this.setState({phase:"screen"})}>Play again</Button>{" "}
+          <Link to="/game-list"><Button variant="primary">Play other lists</Button></Link>
         </Card.Body>
       </Card>
     )
@@ -124,9 +141,36 @@ class GuessList extends React.Component {
       guessedWords:[],
       wordsRemaining:[].concat(this.state.allWords),
       currentWord:this.pickFirstWord(),
+      guessedCorrect:0,
+      guessedWrong:0,
       mdShow:true
     });
   }
+
+ componentDidMount() {
+   let parts = window.location.href.split('/');
+   let id = parts[parts.length-1];
+   //Get the data
+   let data = {"1":{"title":"Silmarillion", "description":"Words from the silmarillion.  For people beyond LOTR!","words":[
+        'Morgoth', "Feanor", "Fingolfin", "Ungoliant", "Eren and Luthian", "Bleesed Isles", "Sauron", "Balrog", "Glaurung"
+      ]},
+      "2":{"title":"Disney", "description":"Disney words from the movies and books","words":[
+        "Mickey Mouse","Daffy Duck"
+      ]},
+      "3":{"title":"Fortnite", "description":"The game fortnite is huge, these words are from it","words":[
+        "Hamburgler","Big Jug"
+      ]},
+      "4":{ "title":"Garfield", "description":"Words fromt he lovable cartoon Garfield","words":[
+        "Garfield","Odie","Jon","Nermal", "Lasagne", "I hate Mondays", "Arlene"
+      ]},
+    };
+    this.setState({
+      id: id,
+      name: data[id].title,
+      description: data[id].description,
+      allWords: data[id].words,
+    });
+ }
 
   startScreen() {
     return (
@@ -165,4 +209,4 @@ class GuessList extends React.Component {
     }  
   }
 }
-export default GuessList;
+export default Game;

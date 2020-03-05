@@ -16,7 +16,7 @@ class Home extends React.Component {
           <Card.Text>
             A game of guessing fun for all the family and your crazy friends.
           </Card.Text>
-          <Link to="/temp-play"><Button variant="primary">Get started</Button></Link>
+          <Link to="/game-list"><Button variant="primary">Get started</Button></Link>
         </Card.Body>
       </Card>
     );
