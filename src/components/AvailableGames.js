@@ -41,6 +41,7 @@ class AvailableGames extends React.Component {
                 {"id":"2", "title":"Disney", "description":"Disney words from the movies and books"},
                 {"id":"3", "title":"Fortnite", "description":"The game fortnite is huge, these words are from it"},
                 {"id":"4", "title":"Garfield", "description":"Words fromt he lovable cartoon Garfield"},
+                {"id":"5", "title":"Animals", "description":"All sorts of crazy animals, bbet you don't know some"},
                 ];
     
     let loadingGames = data.map((item) => { 
