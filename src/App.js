@@ -31,6 +31,12 @@ import './App.css';
  * https://reacttraining.com/react-router/web/guides/quick-start
  * 
  * 
+ * === Google Cloud Deploy
+ * Copy build directory to src/build in the GAE project
+ * gcloud config set project what-word-is-that
+ * gcloud app deploy
+ * https://what-word-is-that.appspot.com/
+ * 
  */
 
  /** TODO
@@ -51,12 +57,12 @@ class App extends React.Component{
             <Navbar.Brand as={Link} to="/">Guess words!</Navbar.Brand>
             <NavDropdown title="Options" id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/edit-list">Edit list</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/login">Login</NavDropdown.Item>
             </NavDropdown>
           </Navbar>
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
           <Switch>
-            <Route path="/edit-list">
+            <Route path="/login">
               <EditList list={workingList}/>
             </Route>
             <Route path="/play/:id">
