@@ -57,7 +57,7 @@ class App extends React.Component{
             <Navbar.Brand as={Link} to="/">Guess words!</Navbar.Brand>
             <NavDropdown title="Options" id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/login">Login</NavDropdown.Item>
+              <NavDropdown.Item href="/edit/">Manage my lists</NavDropdown.Item>
             </NavDropdown>
           </Navbar>
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
