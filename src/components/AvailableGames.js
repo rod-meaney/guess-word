@@ -8,16 +8,17 @@ class GameItem extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      id:this.props.id,
+      key:this.props.id,
       description:this.props.description,
-      title:this.props.title
+      name:this.props.name,
+      private:this.props.private
     }
   }  
   render() {
     return(
-      <ListGroup.Item>{this.state.title}
+      <ListGroup.Item>{this.state.name}
         <span className="float-right">
-        <Link to={`/play/${this.state.id}`}>
+        <Link to={`/play?id=${this.state.key}`}>
           <ChevronRight />
           </Link>
         </span>
@@ -36,23 +37,17 @@ class AvailableGames extends React.Component {
   }
 
   componentDidMount(){
-    //end state will be using fetch etc.
-    let data = [{"id":"1", "title":"Silmarillion", "description":"Words from the silmarillion.  For people beyond LOTR!"},
-                {"id":"2", "title":"Disney", "description":"Disney words from the movies and books"},
-                {"id":"3", "title":"Fortnite", "description":"The game fortnite is huge, these words are from it"},
-                {"id":"4", "title":"Garfield", "description":"Words fromt he lovable cartoon Garfield"},
-                {"id":"5", "title":"Animals", "description":"All sorts of crazy animals, bbet you don't know some"},
-                ];
-    
-    let loadingGames = data.map((item) => { 
-      return (<GameItem 
-        id={item.id} 
-                key={`${item.id}`} 
-                title={item.title} 
-                description={item.description} 
-              />)
-    })
-    this.setState({games:loadingGames});
+    let that = this;
+    fetch(process.env.REACT_APP_URL+'/api/search')
+    .then(results => {
+      return results.json()})
+    .then(data => {
+      that.setState({games:data}); 
+    }).catch(function(error) {
+      console.log('Fetch has failed so defaulting in some data for local testing.');
+      let data = [{"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACQw", "private": false, "name": "Cats", "description": "Purrrrrrrrr"}, {"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACgw", "private": false, "name": "Dogs", "description": "Doggies"}];
+      that.setState({games:data}); 
+   });
   }
 
   render() {
@@ -60,7 +55,13 @@ class AvailableGames extends React.Component {
       <Card>
         <Card.Body>
           <ListGroup>
-            {this.state.games.map((item) => item)}
+            {this.state.games.map((item) => <GameItem 
+                                              id={item.key}
+                                              key={item.key}
+                                              name={item.name}
+                                              description={item.description}
+                                              private={item.private}
+                                              />)}
           </ListGroup>
         </Card.Body>
       </Card>

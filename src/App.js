@@ -65,7 +65,7 @@ class App extends React.Component{
             <Route path="/login">
               <EditList list={workingList}/>
             </Route>
-            <Route path="/play/:id">
+            <Route path="/play">
               <Game />
             </Route>
             <Route path="/game-list">
