@@ -31,11 +31,20 @@ import './App.css';
  * https://reacttraining.com/react-router/web/guides/quick-start
  * 
  * 
- * === Google Cloud Deploy
- * Copy build directory to src/build in the GAE project
+ * === Google Cloud Deploy ===
+ * Copy build directory to read (this project) and edit (authenticated project) in the GAE project
+ * 
+ * == Manual ==
  * gcloud config set project what-word-is-that
- * gcloud app deploy
+ * gcloud app deploy #in the directory with the app.yaml
  * https://what-word-is-that.appspot.com/
+ * gcloud app deploy index.yaml #I had trouble with indexes not deploying - maybe run this and wait. Hopefully auto-deploy working
+ * 
+ * == Automated ==
+ * Now running through auto-build on commit to GitHub
+ * https://cloud.google.com/source-repositories/docs/quickstart-triggering-builds-with-source-repositories
+ * https://console.cloud.google.com/cloud-build/dashboard?project=what-word-is-that
+ * 
  * 
  */
 

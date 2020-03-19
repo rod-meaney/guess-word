@@ -14,8 +14,30 @@ class GameScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      startTime:Date.now() + 8000
+      startTime:Date.now() + 8000,
+      acc_x:0,
+      acc_y:0,
+      acc_z:0,
+      windowWith: window.innerWidth
     }
+  }
+  componentDidMount(){
+    window.addEventListener('devicemotion', this.handleMotion);
+    window.addEventListener('resize', this.handleResize)
+  }
+  componentWillUnmount(){
+    window.removeEventListener('devicemotion', this.handleMotion);
+    window.removeEventListener('resize', this.handleResize)
+  }
+  handleResize = (event) => {
+    this.setState({ windowWith: window.innerWidth })
+  }
+  handleMotion(event) {
+    this.setState({
+      acc_x:event.acceleration.x,
+      acc_y:event.acceleration.y,
+      acc_z:event.acceleration.z
+    })
   }
 
   clockRenderer ({ hours, minutes, seconds, completed }) {
@@ -69,6 +91,7 @@ class Game extends React.Component {
       currentWord:"",
       mdShow:false,
     }
+    //this.handleMotion = this.handleMotion().bind(this);
   }
 
   timesUp() {
@@ -168,7 +191,9 @@ class Game extends React.Component {
       <Card>
         <Card.Body>
           <Card.Title>{this.state.name}</Card.Title>
-          <Card.Text>{this.state.description}</Card.Text>
+          <Card.Text>
+            {this.state.description}
+          </Card.Text>
           <Button variant="primary" onClick={() => this.startGame()}>Play</Button>
         </Card.Body>
         <Modal
