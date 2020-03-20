@@ -9,35 +9,75 @@ import Modal from 'react-bootstrap/Modal';
 import { StarFill, TrashFill } from 'react-bootstrap-icons';
 import "./Game.css"
 import { Link } from 'react-router-dom';
+import correctSound from '../media/correct.wav';
+import incorrectSound from '../media/incorrect.wav';
 
 class GameScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      startTime:Date.now() + 8000,
-      acc_x:0,
-      acc_y:0,
-      acc_z:0,
+      startTime:Date.now() + 60000,
+      soundLastPlayed:new Date(),
+      soundTimeDiff:2000,
+      soundDegreeVar:20,
+      ori_x:0,
+      ori_y:0,
+      ori_z:0,
       windowWith: window.innerWidth
     }
   }
+
+  //Sounds used in either case
+  audio_correct = new Audio(correctSound);
+  audio_incorrect = new Audio(incorrectSound);
+
+  //Handles the phone orientation
   componentDidMount(){
-    window.addEventListener('devicemotion', this.handleMotion);
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener("deviceorientation", this.handleOrientation);
   }
   componentWillUnmount(){
-    window.removeEventListener('devicemotion', this.handleMotion);
-    window.removeEventListener('resize', this.handleResize)
+    window.removeEventListener("deviceorientation", this.handleOrientation);
   }
-  handleResize = (event) => {
-    this.setState({ windowWith: window.innerWidth })
+  approx(value) {
+    if (value != null){return value.toFixed(2);}
+    return 0; 
   }
-  handleMotion(event) {
+  handleOrientation = (event) => {
     this.setState({
-      acc_x:event.acceleration.x,
-      acc_y:event.acceleration.y,
-      acc_z:event.acceleration.z
-    })
+      ori_x:this.approx(event.alpha),
+      ori_y:this.approx(event.beta),
+      ori_z:this.approx(event.gamma)
+    });
+    this.checkPlay();
+  } 
+
+  checkPlay(){
+    if ((new Date() - this.state.soundLastPlayed)>this.state.soundTimeDiff){
+      //Its been soundTimeDiff/1000 seconds since tune was played
+      if ((Math.abs(this.state.ori_y) > (180-this.state.soundDegreeVar)) && ((Math.abs(this.state.ori_z) < (0+this.state.soundDegreeVar)))){
+          //When phone sideways, y is near 180, z is near 0 - phone tilted forward
+          this.setState({soundLastPlayed:new Date()});
+          this.audio_correct.play();
+          this.props.correct();
+      }
+      if ((Math.abs(this.state.ori_y) < (0+this.state.soundDegreeVar)) && ((Math.abs(this.state.ori_z) < (0+this.state.soundDegreeVar)))){
+        //When phone sideways, y is near 0, z is near 0
+        this.setState({soundLastPlayed:new Date()});
+        this.audio_incorrect.play();
+        this.props.wrong();
+      }
+    }
+  }
+
+  //handles buttons used
+  handleCButtonPushed(correct){
+    if (correct){
+      this.props.correct();
+      this.audio_correct.play();
+    } else {
+      this.props.wrong();
+      this.audio_incorrect.play();
+    }
   }
 
   clockRenderer ({ hours, minutes, seconds, completed }) {
@@ -64,10 +104,10 @@ class GameScreen extends React.Component {
         <br />
         <Row>
           <Col>
-            <Button variant="outline-success" className="btn-block" onClick={() => this.props.correct()}>Correct</Button> {" "}
+            <Button variant="outline-success" className="btn-block" onClick={() => this.handleCButtonPushed(true)}>Correct</Button> {" "}
           </Col>
           <Col>
-            <Button variant="outline-danger"  className="btn-block" onClick={() => this.props.wrong()}>Wrong</Button>
+            <Button variant="outline-danger" className="btn-block" onClick={() => this.handleCButtonPushed(false)}>Wrong</Button>
           </Col>
         </Row>
       </>

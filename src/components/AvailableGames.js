@@ -22,7 +22,6 @@ class GameItem extends React.Component {
           <ChevronRight />
           </Link>
         </span>
-        
       </ListGroup.Item>
     );
   }
