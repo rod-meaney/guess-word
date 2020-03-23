@@ -19,7 +19,7 @@ class GameItem extends React.Component {
       <ListGroup.Item>{this.state.name}
         <span className="float-right">
         <Link to={`/play?id=${this.state.key}`}>
-          <ChevronRight /><ChevronRight />
+          <ChevronRight />
           </Link>
         </span>
       </ListGroup.Item>

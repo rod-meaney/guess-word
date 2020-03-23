@@ -7,6 +7,7 @@ import EditList from './components/EditList';
 import Home from './components/Home';
 import Game from './components/Game';
 import AvailableGames from './components/AvailableGames';
+import {PersonFill} from 'react-bootstrap-icons'
 
 import {
   BrowserRouter as Router,
@@ -59,6 +60,32 @@ import './App.css';
 const workingList = [{id:'a', name:'Mickey Mouse'}, {id:'b', name:'Donald Duck'}, {id:'c', name:'Goofy'}];
 
 class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      auth:false,
+      user:"anonymous"
+    }
+  }  
+
+  componentDidMount(){
+    let that = this;
+    fetch(process.env.REACT_APP_URL+'/api/user')
+    .then(results => {
+      return results.json()})
+    .then(data => {
+      let returned_user = data.response;
+      if (returned_user !== "anonymous"){
+        that.setState({
+          auth:true,
+          user: returned_user
+        })
+      }
+    }).catch(function(error) {
+      console.log('Fetch user has failed so assume anonymous - do nothing');
+   });
+  }
+
   render() {
     return (
       <Router>
@@ -68,7 +95,9 @@ class App extends React.Component{
             <NavDropdown title="Options" id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/game-list">List of games</NavDropdown.Item>
+              <NavDropdown.Divider />
               <NavDropdown.Item href="/edit/">Manage my lists</NavDropdown.Item>
+              <NavDropdown.Item><PersonFill /> {this.state.user}</NavDropdown.Item>
             </NavDropdown>
           </Navbar>
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
