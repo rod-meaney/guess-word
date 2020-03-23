@@ -29,6 +29,7 @@ import './App.css';
  * https://www.robinwieruch.de/react-list-component
  * https://icons.getbootstrap.com/
  * https://reacttraining.com/react-router/web/guides/quick-start
+ * https://freesound.org/ for my sounds (Currently not using a websounds are proving troublesome)
  * 
  * 
  * === Google Cloud Deploy ===
@@ -66,6 +67,7 @@ class App extends React.Component{
             <Navbar.Brand as={Link} to="/">Guess words!</Navbar.Brand>
             <NavDropdown title="Options" id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/game-list">List of games</NavDropdown.Item>
               <NavDropdown.Item href="/edit/">Manage my lists</NavDropdown.Item>
             </NavDropdown>
           </Navbar>

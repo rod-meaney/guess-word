@@ -3,45 +3,71 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Countdown from 'react-countdown'
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import { StarFill, TrashFill } from 'react-bootstrap-icons';
 import "./Game.css"
 import { Link } from 'react-router-dom';
-import correctSound from '../media/correct.wav';
-import incorrectSound from '../media/incorrect.wav';
 
-class GameScreen extends React.Component {
+class ReadySetModal extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      text:"Ready"
+    }
+  }
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.setState({text:"Set"});
+      setTimeout(() => {
+        this.setState({text:"Go"});
+        setTimeout(() => {
+          this.props.readySetFinished();
+        }, 1000)
+      },1000);
+    }, 1000);
+  }
+
+  render(){
+    return (
+      <>
+        <br />
+        <h1>{this.state.text}</h1>
+        <br /><br />
+      </>
+    )
+  }
+}
+
+class GameModal extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       startTime:Date.now() + 60000,
-      soundLastPlayed:new Date(),
-      soundTimeDiff:2000,
-      soundDegreeVar:20,
+      answerLastPlayed:new Date(),
+      answerTimeDiff:2000,
+      answerDegreeVar:20,
       ori_x:0,
       ori_y:0,
       ori_z:0,
-      windowWith: window.innerWidth
+      windowWith: window.innerWidth,
     }
   }
-
-  //Sounds used in either case
-  audio_correct = new Audio(correctSound);
-  audio_incorrect = new Audio(incorrectSound);
 
   //Handles the phone orientation
   componentDidMount(){
     window.addEventListener("deviceorientation", this.handleOrientation);
+    
   }
   componentWillUnmount(){
     window.removeEventListener("deviceorientation", this.handleOrientation);
   }
+
   approx(value) {
     if (value != null){return value.toFixed(2);}
     return 0; 
   }
+
   handleOrientation = (event) => {
     this.setState({
       ori_x:this.approx(event.alpha),
@@ -52,31 +78,18 @@ class GameScreen extends React.Component {
   } 
 
   checkPlay(){
-    if ((new Date() - this.state.soundLastPlayed)>this.state.soundTimeDiff){
-      //Its been soundTimeDiff/1000 seconds since tune was played
-      if ((Math.abs(this.state.ori_y) > (180-this.state.soundDegreeVar)) && ((Math.abs(this.state.ori_z) < (0+this.state.soundDegreeVar)))){
+    if ((new Date() - this.state.answerLastPlayed)>this.state.answerTimeDiff){
+      //Its been answerTimeDiff/1000 seconds since tune was played
+      if ((Math.abs(this.state.ori_y) > (180-this.state.answerDegreeVar)) && ((Math.abs(this.state.ori_z) < (0+this.state.answerDegreeVar)))){
           //When phone sideways, y is near 180, z is near 0 - phone tilted forward
-          this.setState({soundLastPlayed:new Date()});
-          this.audio_correct.play();
+          this.setState({answerLastPlayed:new Date()});
           this.props.correct();
       }
-      if ((Math.abs(this.state.ori_y) < (0+this.state.soundDegreeVar)) && ((Math.abs(this.state.ori_z) < (0+this.state.soundDegreeVar)))){
+      if ((Math.abs(this.state.ori_y) < (0+this.state.answerDegreeVar)) && ((Math.abs(this.state.ori_z) < (0+this.state.answerDegreeVar)))){
         //When phone sideways, y is near 0, z is near 0
-        this.setState({soundLastPlayed:new Date()});
-        this.audio_incorrect.play();
+        this.setState({answerLastPlayed:new Date()});
         this.props.wrong();
       }
-    }
-  }
-
-  //handles buttons used
-  handleCButtonPushed(correct){
-    if (correct){
-      this.props.correct();
-      this.audio_correct.play();
-    } else {
-      this.props.wrong();
-      this.audio_incorrect.play();
     }
   }
 
@@ -86,33 +99,25 @@ class GameScreen extends React.Component {
       return <span>Done</span>;
     } else {
       // Render a countdown
-      return <span>{minutes}:{seconds}</span>;
+      return <span>{(minutes*60)+seconds} seconds</span>;
     }
   };
 
   render(){
     return (
       <>
-        <center>
-          <h1>{this.props.displayWord}</h1>
-          {"Time remaining: "}
-          <Countdown 
-            date={this.state.startTime} 
-            onComplete={this.props.countdownComplete}
-            renderer={this.clockRenderer}/>
-        </center>
         <br />
-        <Row>
-          <Col>
-            <Button variant="outline-success" className="btn-block" onClick={() => this.handleCButtonPushed(true)}>Correct</Button> {" "}
-          </Col>
-          <Col>
-            <Button variant="outline-danger" className="btn-block" onClick={() => this.handleCButtonPushed(false)}>Wrong</Button>
-          </Col>
-        </Row>
+        <h1>{this.props.displayWord}</h1>
+        {"Time remaining: "}
+        <Countdown 
+          date={this.state.startTime} 
+          onComplete={this.props.countdownComplete}
+          renderer={this.clockRenderer}/>
+        <br /><br />
       </>
     )
   }
+
 }
 
 class Game extends React.Component {
@@ -130,8 +135,8 @@ class Game extends React.Component {
       phase:"screen",
       currentWord:"",
       mdShow:false,
+
     }
-    //this.handleMotion = this.handleMotion().bind(this);
   }
 
   timesUp() {
@@ -206,7 +211,8 @@ class Game extends React.Component {
       currentWord:this.pickFirstWord(),
       guessedCorrect:0,
       guessedWrong:0,
-      mdShow:true
+      mdShow:true,
+      readySet:true
     });
   }
 
@@ -226,6 +232,26 @@ class Game extends React.Component {
     });
   }
 
+  finishedReadSet(){
+    this.setState({readySet:false})
+  }
+
+  modalBody(){
+    if (this.state.readySet){
+      return <ReadySetModal 
+        readySetFinished={this.finishedReadSet.bind(this)}
+        />
+    } else {
+      return <GameModal 
+          ref={this.gameScreenRef}
+          correct={this.handleCorrect.bind(this)}
+          wrong={this.handleWrong.bind(this)}
+          displayWord={this.state.currentWord}
+          countdownComplete={this.timesUp.bind(this)}
+        />
+    }
+  }
+
   startScreen() {
     return (
       <Card>
@@ -243,13 +269,7 @@ class Game extends React.Component {
           onEnter={this.loadModal.bind(this)}
         >
           <Modal.Body>
-            <GameScreen 
-              ref={this.gameScreenRef}
-              correct={this.handleCorrect.bind(this)}
-              wrong={this.handleWrong.bind(this)}
-              displayWord={this.state.currentWord}
-              countdownComplete={this.timesUp.bind(this)}
-            />
+            {this.modalBody()}
           </Modal.Body>
         </Modal>
       </Card>
