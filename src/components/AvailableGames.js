@@ -37,7 +37,7 @@ class AvailableGames extends React.Component {
 
   componentDidMount(){
     let that = this;
-    fetch(process.env.REACT_APP_URL+'/api/search')
+    fetch(process.env.REACT_APP_URL+`/api/${this.props.api}`)
     .then(results => {
       return results.json()})
     .then(data => {

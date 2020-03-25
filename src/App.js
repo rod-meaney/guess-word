@@ -89,11 +89,14 @@ class App extends React.Component{
   loginDisplay(){
     if (this.state.auth){
       return (<>
-        <NavDropdown.Item href="/edit/">Manage my lists</NavDropdown.Item>
+        <NavDropdown.Item as={Link} to="/my-game-list">My games</NavDropdown.Item>
+        <NavDropdown.Divider />
+        <NavDropdown.Item href="/edit/">Manage my games</NavDropdown.Item>
         <NavDropdown.Item><PersonFill /> {this.state.user}</NavDropdown.Item>
         </>);
     } else {
       return (<>
+        <NavDropdown.Divider />
         <NavDropdown.Item href="/edit/logged-in"><Person /> {this.state.user}</NavDropdown.Item>
         </>);
     }
@@ -107,8 +110,7 @@ class App extends React.Component{
             <Navbar.Brand as={Link} to="/">WWIT</Navbar.Brand>
             <NavDropdown title={<Gear />} id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/game-list">List of games</NavDropdown.Item>
-              <NavDropdown.Divider />
+              <NavDropdown.Item as={Link} to="/public-game-list">Public games</NavDropdown.Item>
               {this.loginDisplay()}
             </NavDropdown>
           </Navbar>
@@ -120,9 +122,12 @@ class App extends React.Component{
             <Route path="/play">
               <Game />
             </Route>
-            <Route path="/game-list">
-              <AvailableGames />
-            </Route>           
+            <Route path="/public-game-list">
+              <AvailableGames api="search" />
+            </Route>
+            <Route path="/my-game-list">
+              <AvailableGames api="my-lists" />
+            </Route>                       
             <Route path="/temp-play">
               <Game />
             </Route>               
