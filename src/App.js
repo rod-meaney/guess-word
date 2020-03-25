@@ -7,7 +7,7 @@ import EditList from './components/EditList';
 import Home from './components/Home';
 import Game from './components/Game';
 import AvailableGames from './components/AvailableGames';
-import {PersonFill} from 'react-bootstrap-icons'
+import {Person, PersonFill, Gear} from 'react-bootstrap-icons'
 
 import {
   BrowserRouter as Router,
@@ -64,7 +64,7 @@ class App extends React.Component{
     super(props);
     this.state = {
       auth:false,
-      user:"anonymous"
+      user:"login"
     }
   }  
 
@@ -86,18 +86,30 @@ class App extends React.Component{
    });
   }
 
+  loginDisplay(){
+    if (this.state.auth){
+      return (<>
+        <NavDropdown.Item href="/edit/">Manage my lists</NavDropdown.Item>
+        <NavDropdown.Item><PersonFill /> {this.state.user}</NavDropdown.Item>
+        </>);
+    } else {
+      return (<>
+        <NavDropdown.Item href="/edit/logged-in"><Person /> {this.state.user}</NavDropdown.Item>
+        </>);
+    }
+  }
+
   render() {
     return (
       <Router>
         <Container>
           <Navbar bg="light" expand="lg">
-            <Navbar.Brand as={Link} to="/">Guess words!</Navbar.Brand>
-            <NavDropdown title="Options" id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
+            <Navbar.Brand as={Link} to="/">WWIT</Navbar.Brand>
+            <NavDropdown title={<Gear />} id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/game-list">List of games</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/edit/">Manage my lists</NavDropdown.Item>
-              <NavDropdown.Item><PersonFill /> {this.state.user}</NavDropdown.Item>
+              {this.loginDisplay()}
             </NavDropdown>
           </Navbar>
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}

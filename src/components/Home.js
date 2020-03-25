@@ -115,10 +115,10 @@ class Home extends React.Component {
           </Modal.Header>
           <Modal.Body>When you get the game starting<br /><br /> 
             <ul>
-              <li>You will have 3 seconds to place the phone on your forhead facing other people</li>
-              <li>They need make you say the word without saying all or any part of the word</li>
-              <li>If you get it correct, roll the device so it would be face down.  Wait until you here the correct sound, then roll it back up.</li>
-              <li>If you get it incorrect, roll the device so it would be face up.  Wait until you here the incorrect sound, then roll it back down.</li>
+              <li>You will have 3 seconds to place the device (recommend phone horizontally) on your forehead facing other people in the ready position.</li>
+              <li>They need make you say the word on the screen without saying all or any part of the word.</li>
+              <li>If you get it correct, roll the device so it would be face down for 1/2 a second.  Then roll it back up to the ready position.</li>
+              <li>If you get it incorrect, roll the device so it would be face up for 1/2 a second.  Then roll it back down to the ready position.</li>
               <li>After 60 seconds, check your score.</li>
             </ul>
           </Modal.Body>
