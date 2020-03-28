@@ -71,7 +71,7 @@ class Home extends React.Component {
 
   playButton(){
     if (this.state.can_play) {
-      return <Link to="/public-game-list"><Button variant="primary">Check out the lists</Button></Link>
+      return <Link to="/public-game-list"><Button variant="primary">Public lists</Button></Link>
     } else {
       return "";
     }

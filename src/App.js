@@ -6,7 +6,8 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import EditList from './components/EditList';
 import Home from './components/Home';
 import Game from './components/Game';
-import AvailableGames from './components/AvailableGames';
+import GamesListPublic from './components/GamesListPublic';
+import GamesListMy from './components/GamesListMy';
 import {Person, PersonFill, Gear} from 'react-bootstrap-icons'
 
 import {
@@ -64,7 +65,8 @@ class App extends React.Component{
     super(props);
     this.state = {
       auth:false,
-      user:"login"
+      user:"login",
+      errorMsg:""
     }
   }  
 
@@ -123,14 +125,14 @@ class App extends React.Component{
               <Game />
             </Route>
             <Route path="/public-game-list">
-              <AvailableGames api="search" />
+              <GamesListPublic api="search" />
             </Route>
             <Route path="/my-game-list">
-              <AvailableGames api="my-lists" />
+              <GamesListMy api="my-lists" />
             </Route>                       
             <Route path="/temp-play">
               <Game />
-            </Route>               
+            </Route>
             <Route path="/">
               <Home />
             </Route>
