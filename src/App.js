@@ -8,7 +8,7 @@ import Home from './components/Home';
 import Game from './components/Game';
 import GamesListPublic from './components/GamesListPublic';
 import GamesListMy from './components/GamesListMy';
-import {Person, PersonFill, Gear} from 'react-bootstrap-icons'
+import {Person, PersonFill, List} from 'react-bootstrap-icons'
 
 import {
   BrowserRouter as Router,
@@ -109,12 +109,12 @@ class App extends React.Component{
       <Router>
         <Container>
           <Navbar bg="light" expand="lg">
-            <Navbar.Brand as={Link} to="/">WWIT</Navbar.Brand>
-            <NavDropdown title={<Gear />} id="basic-nav-dropdown" className="nav-item dropdown ml-auto">
+            <NavDropdown title={<List />} id="basic-nav-dropdown" className="dropdown mr-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/public-game-list">Public games</NavDropdown.Item>
               {this.loginDisplay()}
             </NavDropdown>
+            <Navbar.Brand as={Link} to="/">WWiT</Navbar.Brand>
           </Navbar>
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
           <Switch>

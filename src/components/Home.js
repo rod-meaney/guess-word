@@ -2,8 +2,8 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import Modal from 'react-bootstrap/Modal';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Help from './Help';
 import {
   Link
 } from "react-router-dom";
@@ -12,18 +12,18 @@ class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      showHelp:false,
+      //showHelp:false,
       can_play:false,
       request_orientation:true,
       ori_x:0,
       ori_y:0,
       ori_z:0,
-      available_message:<Alert variant="info">You have not requested orietnation yet.</Alert>
+      available_message:<Alert variant="info">You have not requested orietnation yet. To play this game try the button below.</Alert>
     }
   }
 
-  handleCloseHelp(){this.setState({showHelp:false});}
-  handleShowHelp() {this.setState({showHelp:true});}
+  //handleCloseHelp(){this.setState({showHelp:false});}
+  //handleShowHelp() {this.setState({showHelp:true});}
 
   componentDidMount(){window.addEventListener("deviceorientation", this.handleOrientation);}
   componentWillUnmount(){window.removeEventListener('deviceorientation', this.handleOrientation);}
@@ -93,10 +93,10 @@ class Home extends React.Component {
           <Card.Title>What-word-is-that!</Card.Title>
             <Card.Text>
               A game of guessing fun for all the family and your crazy friends. <br />
-              <Button variant="link" onClick={() => this.handleShowHelp()}>How to play</Button>
+              <Help helpKey="How to play" />
             </Card.Text>
             {this.playButton()}<p />
-            <Card.Title>Testing orientation</Card.Title>
+            <Card.Title>Testing orientation <Help helpKey="What is this" /></Card.Title>
             {this.state.available_message}
             {this.requestOrientationButton()}<p />
             <p>
@@ -109,25 +109,6 @@ class Home extends React.Component {
             </ListGroup>
           </Card.Body>
         </Card>
-        <Modal show={this.state.showHelp} onHide={this.handleCloseHelp.bind(this)}>
-          <Modal.Header closeButton>
-            <Modal.Title>How to play</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>When you get the game starting<br /><br /> 
-            <ul>
-              <li>You will have 3 seconds to place the device (recommend phone horizontally) on your forehead facing other people in the ready position.</li>
-              <li>They need make you say the word on the screen without saying all or any part of the word.</li>
-              <li>If you get it correct, roll the device so it would be face down for 1/2 a second.  Then roll it back up to the ready position.</li>
-              <li>If you get it incorrect, roll the device so it would be face up for 1/2 a second.  Then roll it back down to the ready position.</li>
-              <li>After 60 seconds, check your score.</li>
-            </ul>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleCloseHelp.bind(this)}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>        
       </>
     );
   }

@@ -1,6 +1,5 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import {Link} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import {ChevronRight} from 'react-bootstrap-icons';
 import ErrorMsg from './ErrorMsg'
@@ -17,12 +16,8 @@ class GameItem extends React.Component {
   }  
   render() {
     return(
-      <ListGroup.Item>{this.state.name}
-        <span className="float-right">
-        <Link to={`/play?id=${this.state.key}`}>
-          <ChevronRight />
-          </Link>
-        </span>
+      <ListGroup.Item action href={`/play?id=${this.state.key}`}>{this.state.name}
+        <span className="float-right"><ChevronRight /></span>
       </ListGroup.Item>
     );
   }
@@ -46,7 +41,9 @@ class GameList extends React.Component {
       if (data["error"]){that.setState({errorMsg:data["error"]})} else {that.setState({games:data}); }
     }).catch(function(error) {
       that.setState({errorMsg:"Fetch has failed so defaulting in some data for local testing."})
-      let data = [{"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACQw", "private": false, "name": "Cats", "description": "Purrrrrrrrr"}, {"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACgw", "private": false, "name": "Dogs", "description": "Doggies"}];
+      let data = [{"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACQw", "private": false, "name": "Cats", "description": "Purrrrrrrrr"}, 
+                  {"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACgw", "private": false, "name": "Dogs", "description": "Doggies"},
+                  {"key": "test", "private": false, "name": "Fun Test", "description": "Testing"}];
       that.setState({games:data}); 
    });
   }
