@@ -2,7 +2,8 @@ import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Card from 'react-bootstrap/Card';
 import {ChevronRight} from 'react-bootstrap-icons';
-import ErrorMsg from './ErrorMsg'
+import ErrorMsg from './ErrorMsg';
+import Fetching from './Fetching';
 
 class GameItem extends React.Component {
   constructor(props){
@@ -11,7 +12,8 @@ class GameItem extends React.Component {
       key:this.props.id,
       description:this.props.description,
       name:this.props.name,
-      private:this.props.private
+      private:this.props.private,
+      loading:false
     }
   }  
   render() {
@@ -34,6 +36,7 @@ class GameList extends React.Component {
 
   componentDidMount(){
     let that = this;
+    this.setState({loading:true});  
     fetch(process.env.REACT_APP_URL+`/api/${this.props.api}`)
     .then(results => {
       return results.json()})
@@ -45,7 +48,7 @@ class GameList extends React.Component {
                   {"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACgw", "private": false, "name": "Dogs", "description": "Doggies"},
                   {"key": "test", "private": false, "name": "Fun Test", "description": "Testing"}];
       that.setState({games:data}); 
-   });
+   }).finally(()=>{this.setState({loading:false});});
   }
 
   noItems() {
@@ -55,7 +58,7 @@ class GameList extends React.Component {
   handleShowError() {if (this.state.errorMsg===""){return false;} else {return true;}}
   handleCloseError(){this.setState({errorMsg:""})}
   getErrorMsg(){return this.state.errorMsg;}
-
+    
   render() {
     return (
       <>
@@ -70,6 +73,7 @@ class GameList extends React.Component {
                                               private={item.private}
                                               />)}
             {this.noItems()}
+            <Fetching message="Loading.." loading={this.state.loading} />
           </ListGroup>
         </Card.Body>
       </Card>
