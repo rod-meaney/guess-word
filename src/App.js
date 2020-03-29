@@ -125,10 +125,10 @@ class App extends React.Component{
               <Game />
             </Route>
             <Route path="/public-game-list">
-              <GamesListPublic api="search" />
+              <GamesListPublic api="search" title="Public games" />
             </Route>
             <Route path="/my-game-list">
-              <GamesListMy api="my-lists" />
+              <GamesListMy api="my-lists" title="My games" />
             </Route>                       
             <Route path="/temp-play">
               <Game />

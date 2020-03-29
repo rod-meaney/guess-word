@@ -64,6 +64,7 @@ class GameList extends React.Component {
       <>
       <Card>
         <Card.Body>
+        <Card.Title>{this.props.title}</Card.Title>
           <ListGroup>
             {this.state.games.map((item) => <GameItem 
                                               id={item.key}
