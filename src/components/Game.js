@@ -296,12 +296,14 @@ class Game extends React.Component {
         <Modal
           size="lg"
           show={this.state.mdShow}
-          onHide={() => this.setState({mdShow:false})}
           onEnter={this.loadModal.bind(this)}
         >
           <Modal.Body>
             {this.modalBody()}
           </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => this.timesUp()}>Close</Button>
+          </Modal.Footer>
         </Modal>
       </Card>
       <ErrorMsg 
