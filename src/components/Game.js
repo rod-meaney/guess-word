@@ -137,7 +137,7 @@ class Game extends React.Component {
       phase:"screen",
       currentWord:"",
       mdShow:false,
-      errorMsg:""
+      errorMsg:"",
     }
   }
 
@@ -308,7 +308,7 @@ class Game extends React.Component {
       </Card>
       <ErrorMsg 
         showError={this.handleShowError()}
-        hideError={this.handleCloseError.bind(this)}
+        closeError={this.handleCloseError.bind(this)}
         getError={this.getErrorMsg.bind(this)}
         />
       </>

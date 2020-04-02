@@ -10,7 +10,7 @@ class Fetching extends React.Component {
   render() {
     if (this.props.loading){
       return (
-        <div><br /><center><span>{this.props.message}</span> <Spinner style={{"vertical-align":"middle"}} animation="grow"/></center></div>
+        <div><br /><center><span>{this.props.message}</span> <Spinner style={{verticalAlign:"middle"}} animation="grow"/></center></div>
       )
     } else {
       return ("");

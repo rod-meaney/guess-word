@@ -1,32 +1,26 @@
 import React from 'react';
 import Toast from 'react-bootstrap/Toast';
 
-class ErrorMsg extends React.Component { 
-  constructor(props){
-    super(props);
-    this.state = {
-    }
-  }
+const styles = {
+  position: 'absolute',
+  top: 12,
+  left: window.innerWidth/2-100
+};
 
-  render() {
-    return (
-      <Toast show={this.props.showError} 
-        onClose={this.props.hideError}
-        style={{
-          position: 'absolute',
-          top: 12,
-          left: window.innerWidth/2-100 ,
-        }}
-        delay={3000} 
-        autohide
-        >
-      <Toast.Header>
-        <strong className="mr-auto">Error</strong>
-      </Toast.Header>
-      <Toast.Body>Error : {this.props.getError()}</Toast.Body>
-    </Toast>
-    );
-  }
+const ErrorMsg = ({showError, closeError, getError}) => {
+  return (
+    <Toast show={showError} 
+      onClose={closeError}
+      style={styles}
+      delay={3000} 
+      autohide
+      >
+    <Toast.Header>
+      <strong className="mr-auto">Error</strong>
+    </Toast.Header>
+    <Toast.Body>Error : {getError()}</Toast.Body>
+  </Toast>
+  );
 }
 
 export default ErrorMsg;
