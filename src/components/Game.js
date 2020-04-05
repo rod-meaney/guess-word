@@ -194,7 +194,7 @@ class Game extends React.Component {
             <AlertCircle className="text-warning" /> {this.state.currentWord}<br />
           </p>
           <Button variant="primary" onClick={() => this.setState({phase:"screen"})}>Play again</Button>{" "}
-          <Link to="/game-list"><Button variant="primary">Play other lists</Button></Link>
+          <Link to="/public-game-list"><Button variant="primary">Play other lists</Button></Link>
         </Card.Body>
       </Card>
     )
