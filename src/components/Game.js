@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Alert from 'react-bootstrap/Alert';
 import Countdown from 'react-countdown'
 import Modal from 'react-bootstrap/Modal';
-import { StarFill, TrashFill } from 'react-bootstrap-icons';
+import { StarFill, TrashFill, AlertCircle } from 'react-bootstrap-icons';
 import "./Game.css"
 import { Link } from 'react-router-dom';
 import ErrorMsg from './ErrorMsg';
@@ -191,6 +191,7 @@ class Game extends React.Component {
                 {this.resultIcon(item.result)} {item.word}<br />
               </span>
             ))}
+            <AlertCircle className="text-warning" /> {this.state.currentWord}<br />
           </p>
           <Button variant="primary" onClick={() => this.setState({phase:"screen"})}>Play again</Button>{" "}
           <Link to="/game-list"><Button variant="primary">Play other lists</Button></Link>

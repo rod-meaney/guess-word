@@ -12,9 +12,11 @@ class GameList extends React.Component {
     super(props);
     this.state = {
       games:[],
+      serverFetchedGames:[],
       errorMsg:"",
       loading:false,
-      searchString:""
+      searchString:"",
+      searchLengthPrev:0
     }
   }
 
@@ -25,7 +27,7 @@ class GameList extends React.Component {
     .then(results => {
       return results.json()})
     .then(data => {
-      if (data["error"]){that.setState({errorMsg:data["error"]})} else {that.setState({games:data}); }
+      if (data["error"]){that.setState({errorMsg:data["error"]})} else {that.setState({games:data, serverFetchedGames:data}); }
     }).catch(function(error) {
       that.setState({errorMsg:"Fetch has failed so defaulting in some data for local testing."})
       let data = [{"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACQw", "private": false, "name": "Cats", "description": "Purrrrrrrrr"}, 
@@ -43,11 +45,30 @@ class GameList extends React.Component {
     return !this.state.loading && this.state.games.length===0?(<ListGroup.Item>No items found</ListGroup.Item>):"";
   }
 
+  search(){
+    //We only do a server search if it is exactly 3 charcters (its the only index on the data)
+    //Once we have returned 3 characters we 
+    if (this.state.searchString.length===0) {
+      //search server when it returns to 0
+      this.getListItems();
+    } else if (this.state.searchString.length===3 && this.state.searchLengthPrev===2) {
+      //Search server when they go from 2-3 chars
+      this.getListItems();
+    } else if (this.state.searchString.length>=3) {
+      //Search the array fetched from the server if greater than 3 or 3 and deleting characters
+      let that = this;
+      let new_games = this.state.serverFetchedGames.filter(function(el){
+        return (el.name.toLowerCase().indexOf(that.state.searchString.toLowerCase())>-1)
+      })
+      this.setState({games:new_games});
+    }
+  }
+
   updateSearch = (event) => {
     event.preventDefault(); 
-    this.setState({searchString:event.target.value});
+    this.setState({searchString:event.target.value, searchLengthPrev:this.state.searchString.length});
     //This is a bit hacky, on the TO-DO
-    setTimeout(() => {if ((this.state.searchString.length===3) || (this.state.searchString.length===0)) this.getListItems();},200);
+    setTimeout(() => this.search(),200);
   }
   handleSubmit = event => {event.preventDefault();}
   showSearch(){
@@ -60,7 +81,6 @@ class GameList extends React.Component {
                     placeholder="Search (first 3 characters only)" 
                     type="text"
                     onChange={this.updateSearch}
-                    maxLength="3"
                   />
                 </Form.Group>
               </Col></Form.Row>

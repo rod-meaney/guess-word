@@ -8,7 +8,7 @@ import Home from './components/Home';
 import Game from './components/Game';
 import GamesListPublic from './components/GamesListPublic';
 import GamesListMy from './components/GamesListMy';
-import {Person, PersonFill, List} from 'react-bootstrap-icons'
+import {Person, PersonFill} from 'react-bootstrap-icons'
 
 import {
   BrowserRouter as Router,
@@ -109,7 +109,7 @@ class App extends React.Component{
       <Router>
         <Container>
           <Navbar bg="light" expand="lg">
-            <NavDropdown title={<List />} id="basic-nav-dropdown" className="dropdown mr-auto">
+            <NavDropdown title="Menu" id="basic-nav-dropdown" className="dropdown mr-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/public-game-list">Public games</NavDropdown.Item>
               {this.loginDisplay()}
