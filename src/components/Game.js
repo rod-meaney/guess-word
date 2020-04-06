@@ -9,6 +9,7 @@ import { StarFill, TrashFill, AlertCircle } from 'react-bootstrap-icons';
 import "./Game.css"
 import { Link } from 'react-router-dom';
 import ErrorMsg from './ErrorMsg';
+import FAQ from './FAQ';
 
 class ReadySetModal extends React.Component {
   constructor(props){
@@ -195,6 +196,10 @@ class Game extends React.Component {
           </p>
           <Button variant="primary" onClick={() => this.setState({phase:"screen"})}>Play again</Button>{" "}
           <Link to="/public-game-list"><Button variant="primary">Play other lists</Button></Link>
+          <br /><br />
+          <p>
+            <FAQ help="How to play?" />
+          </p>
         </Card.Body>
       </Card>
     )
