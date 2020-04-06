@@ -63,7 +63,7 @@ class Home extends React.Component {
               <ul>
                 <li>The url is using https - orientation requires this;</li>
                 <li>Older iPhones require settings updated. Under Safari in settings is 'Motion and Orientation Access';</li>
-                <li>You may bnot be abke to play the App. Some browsers have this setting even though they are not on a device with an accelerometer;</li>
+                <li>You may not be able to play the App. Some browsers have this setting even though they are not on a device with an accelerometer;</li>
               </ul>
               Testing on all devices and browsers has not been done. Feel free to raise an issue with device and browser.
             </Alert>
