@@ -49,7 +49,7 @@ class GameModal extends React.Component {
       startTime:Date.now() + 60000,
       answerLastPlayed:new Date(),
       answerTimeDiff:2000,
-      answerDegreeVar:20,
+      answerDegreeVar:25,
       ori_x:0,
       ori_y:0,
       ori_z:0,
@@ -198,7 +198,7 @@ class Game extends React.Component {
           <Link to="/public-game-list"><Button variant="primary">Play other lists</Button></Link>
           <br /><br />
           <p>
-            <FAQ help="How to play?" />
+            <FAQ helplist={["How to play?"]} />
           </p>
         </Card.Body>
       </Card>

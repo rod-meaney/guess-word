@@ -58,8 +58,8 @@ class FAQ extends React.Component {
 
   render() {
     let currentFAQ = ["How to play?", "What is Device information about?", "Why would I login?"];
-    if (this.props.help) {
-      currentFAQ=[this.props.help];
+    if (this.props.helplist) {
+      currentFAQ=this.props.helplist;
     }
     return (
       <>

@@ -1,14 +1,15 @@
 import React from 'react';
-
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import EditList from './components/EditList';
-import Home from './components/Home';
+import Home from './pages/Home';
 import Game from './components/Game';
 import GamesListPublic from './components/GamesListPublic';
 import GamesListMy from './components/GamesListMy';
-import {Person, PersonFill} from 'react-bootstrap-icons'
+import GameListNew from './components/GameListNew';
+import {Person, PersonFill} from 'react-bootstrap-icons';
+import UserService from '../services/UserService'
 
 import {
   BrowserRouter as Router,
@@ -68,24 +69,16 @@ class App extends React.Component{
       user:"login",
       errorMsg:""
     }
+    this.userService = new UserService();
   }  
 
+  retrievedUser(rUser) {
+    //Only update user if the fetch returns something diffenerent than the default user
+    if (rUser !== this.state.user){this.setState({auth:true,user:rUser})}
+  }
+
   componentDidMount(){
-    let that = this;
-    fetch(process.env.REACT_APP_URL+'/api/user')
-    .then(results => {
-      return results.json()})
-    .then(data => {
-      let returned_user = data.response;
-      if (returned_user !== "anonymous"){
-        that.setState({
-          auth:true,
-          user: returned_user
-        })
-      }
-    }).catch(function(error) {
-      console.log('Fetch user has failed so assume anonymous - do nothing');
-   });
+    this.userService.getUser({defaultUser:this.state.user, gotUser:this.retrievedUser.bind(this)});
   }
 
   loginDisplay(){
@@ -105,6 +98,7 @@ class App extends React.Component{
   }
 
   render() {
+    console.log("Version 1.8");
     return (
       <Router>
         <Container>
@@ -112,11 +106,13 @@ class App extends React.Component{
             <NavDropdown title="Menu" id="basic-nav-dropdown" className="dropdown mr-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/public-game-list">Public games</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/test">Test new design</NavDropdown.Item>
               {this.loginDisplay()}
             </NavDropdown>
             <Navbar.Brand as={Link} to="/">WWiT</Navbar.Brand>
           </Navbar>
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
+
           <Switch>
             <Route path="/login">
               <EditList list={workingList}/>
@@ -129,10 +125,10 @@ class App extends React.Component{
             </Route>
             <Route path="/my-game-list">
               <GamesListMy api="my-lists" title="My games" />
+            </Route>   
+            <Route path="/test">
+              <GameListNew title="Testing new design" api="search" search={true} />
             </Route>                       
-            <Route path="/temp-play">
-              <Game />
-            </Route>
             <Route path="/">
               <Home />
             </Route>

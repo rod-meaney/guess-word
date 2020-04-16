@@ -16,3 +16,7 @@ export function footer(){
     </>
   );
 }
+export function approx(value) {
+  if (value != null){return value.toFixed(2);}
+  return 0; 
+}
