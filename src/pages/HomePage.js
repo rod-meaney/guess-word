@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
-import {footer} from '../components/utils'
+import {footer} from '../utils'
 import FAQ from '../components/FAQ';
 import OrientationDisplay from '../components/orientation/OrientationDisplay';
 import OrientationTest from '../components/orientation/OrientationTest';

@@ -1,10 +1,12 @@
+import {isTest} from '../utils';
 class UserService {
   constructor(props){
-    this.test = process.env.REACT_APP_TEST==="true"?true:false;
+    this.test = isTest();
+    this.baseURL = window.location.origin;
   }
   getUser({defaultUser, gotUser}){
     if (!this.test){
-      fetch(process.env.REACT_APP_URL+'/api/user')
+      fetch(this.baseURL+'/api/user')
       .then(results => {
         return results.json()})
       .then(data => {
