@@ -3,13 +3,12 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import EditList from './components/EditList';
-import Home from './pages/Home';
-import Game from './components/Game';
-import GamesListPublic from './components/GamesListPublic';
-import GamesListMy from './components/GamesListMy';
-import GameListNew from './components/GameListNew';
+import HomePage from './pages/HomePage';
+import GamePage from './pages/GamePage';
+import GamesListPublicPage from './pages/GamesListPublicPage';
+import GamesListMyPage from './pages/GamesListMyPage';
 import {Person, PersonFill} from 'react-bootstrap-icons';
-import UserService from '../services/UserService'
+import UserService from './services/UserService'
 
 import {
   BrowserRouter as Router,
@@ -106,7 +105,6 @@ class App extends React.Component{
             <NavDropdown title="Menu" id="basic-nav-dropdown" className="dropdown mr-auto">
               <NavDropdown.Item as={Link} to="/">Home</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/public-game-list">Public games</NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/test">Test new design</NavDropdown.Item>
               {this.loginDisplay()}
             </NavDropdown>
             <Navbar.Brand as={Link} to="/">WWiT</Navbar.Brand>
@@ -118,19 +116,16 @@ class App extends React.Component{
               <EditList list={workingList}/>
             </Route>
             <Route path="/play">
-              <Game />
+              <GamePage />
             </Route>
             <Route path="/public-game-list">
-              <GamesListPublic api="search" title="Public games" showSearch={true} />
+              <GamesListPublicPage api="search" title="Public games" search={true} />
             </Route>
             <Route path="/my-game-list">
-              <GamesListMy api="my-lists" title="My games" />
-            </Route>   
-            <Route path="/test">
-              <GameListNew title="Testing new design" api="search" search={true} />
-            </Route>                       
+              <GamesListMyPage api="my-lists" title="My games" />
+            </Route>                         
             <Route path="/">
-              <Home />
+              <HomePage />
             </Route>
           </Switch>
         </Container>

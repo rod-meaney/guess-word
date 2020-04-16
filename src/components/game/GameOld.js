@@ -8,39 +8,10 @@ import Modal from 'react-bootstrap/Modal';
 import { StarFill, TrashFill, AlertCircle } from 'react-bootstrap-icons';
 import "./Game.css"
 import { Link } from 'react-router-dom';
-import ErrorMsg from './ErrorMsg';
-import FAQ from './FAQ';
+import ReadySetGoModal from './ReadySetGoModal';
+import ErrorMsg from '../ErrorMsg'; 
 
-class ReadySetModal extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      text:"Ready"
-    }
-  }
-
-  componentDidMount(){
-    setTimeout(() => {
-      this.setState({text:"Set"});
-      setTimeout(() => {
-        this.setState({text:"Go"});
-        setTimeout(() => {
-          this.props.readySetFinished();
-        }, 1000)
-      },1000);
-    }, 1000);
-  }
-
-  render(){
-    return (
-      <>
-        <br />
-        <h1>{this.state.text}</h1>
-        <br /><br />
-      </>
-    )
-  }
-}
+import FAQ from '../FAQ';
 
 class GameModal extends React.Component {
   constructor(props){
@@ -274,9 +245,7 @@ class Game extends React.Component {
 
   modalBody(){
     if (this.state.readySet){
-      return <ReadySetModal 
-        readySetFinished={this.finishedReadSet.bind(this)}
-        />
+      return <ReadySetGoModal finished={this.finishedReadSet.bind(this)} />
     } else {
       return <GameModal 
           ref={this.gameScreenRef}

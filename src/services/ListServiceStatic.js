@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 /*
 Note, this is not used, but for a non dynamic fetch component is an excellent example
+I went to a lot of effort to figure out that this was not an appropriat eapproach - thus why it is still here!
 */
 const testData = [
   {"key": "aghkZXZ-Tm9uZXIRCxIETGlzdBiAgICAgICACQw", "private": false, "name": "Cats", "description": "Purrrrrrrrr"}, 

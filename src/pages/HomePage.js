@@ -7,7 +7,7 @@ import FAQ from '../components/FAQ';
 import OrientationDisplay from '../components/orientation/OrientationDisplay';
 import OrientationTest from '../components/orientation/OrientationTest';
 
-class Home extends React.Component { 
+class HomePage extends React.Component { 
   constructor(props){
     super(props);
     this.state = {
@@ -73,4 +73,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default HomePage;
