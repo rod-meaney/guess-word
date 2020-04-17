@@ -2,7 +2,6 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import EditList from './components/EditList';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
 import GamesListPublicPage from './pages/GamesListPublicPage';
@@ -58,8 +57,6 @@ import './App.css';
  * - Updating the data
  */
 
-const workingList = [{id:'a', name:'Mickey Mouse'}, {id:'b', name:'Donald Duck'}, {id:'c', name:'Goofy'}];
-
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -112,9 +109,6 @@ class App extends React.Component{
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
 
           <Switch>
-            <Route path="/login">
-              <EditList list={workingList}/>
-            </Route>
             <Route path="/play">
               <GamePage />
             </Route>

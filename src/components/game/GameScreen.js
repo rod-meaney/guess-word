@@ -1,13 +1,13 @@
 import React from 'react';
 import Countdown from 'react-countdown';
 
-class GameModal extends React.Component {
+class GameScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       startTime:Date.now() + 60000,
       answerLastPlayed:new Date(),
-      answerTimeDiff:2000,
+      answerTimeDiff:1500,
       answerDegreeVar:25,
       ori_x:0,
       ori_y:0,
@@ -16,18 +16,28 @@ class GameModal extends React.Component {
     }
   }
 
-  //Handles the phone orientation
+  //Handles the phone orientation and keyboard pressing if using a computer
   componentDidMount(){
     window.addEventListener("deviceorientation", this.handleOrientation);
-    
+    window.addEventListener("keyup", this.handleKeyUp);
   }
   componentWillUnmount(){
     window.removeEventListener("deviceorientation", this.handleOrientation);
+    window.removeEventListener("keyup", this.handleKeyUp);
   }
 
   approx(value) {
     if (value != null){return value.toFixed(2);}
     return 0; 
+  }
+
+  handleKeyUp = (event) => {
+    //simpler handling for keyboard
+    if (event.code==="KeyY"){
+      this.props.correct();
+    } else {
+      this.props.wrong();
+    }
   }
 
   handleOrientation = (event) => {
@@ -81,4 +91,4 @@ class GameModal extends React.Component {
   }
 }
 
-export default GameModal;
+export default GameScreen;

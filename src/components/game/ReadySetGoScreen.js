@@ -1,6 +1,6 @@
 import React from 'react';
 
-class ReadySetGoModal extends React.Component {
+class ReadySetGoScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -31,4 +31,4 @@ class ReadySetGoModal extends React.Component {
   }
 }
 
-export default ReadySetGoModal;
+export default ReadySetGoScreen;

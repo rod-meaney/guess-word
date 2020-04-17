@@ -3,6 +3,10 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
 
+/*
+TO-DO Put all this data in a database :-)
+*/
+
 class FAQ extends React.Component {
   constructor(props){
     super(props);
@@ -25,6 +29,19 @@ class FAQ extends React.Component {
             <li>They need make you say the word on the screen without saying all or any part of the word.</li>
             <li>If you get it correct, roll the device so it would be face down for 1/2 a second.  Then roll it back up to the ready position.</li>
             <li>If you get it incorrect, roll the device so it would be face up for 1/2 a second.  Then roll it back down to the ready position.</li>
+            <li>Note: there has to be at least 1.5 seconds between marking correct or incorrect.</li>
+            <li>After 60 seconds, check your score.</li>
+          </ul>
+          </>);
+
+      case "How to play with a keyboard?":
+        return(<>
+          <p>The game is not designed for the player to be looking at it, so this mode would work with someone who has their back to a screen and people facing them. i.e. a loungeroom or a classroom.</p>
+          <ul>
+            <li>You will have 3 seconds to get ready.</li>
+            <li>They need make you say the word on the screen without saying all or any part of the word.</li>
+            <li>If you get it correct, press 'y'.</li>
+            <li>If you get it incorrect, press any other key.</li>
             <li>After 60 seconds, check your score.</li>
           </ul>
           </>);
@@ -57,7 +74,7 @@ class FAQ extends React.Component {
   }
 
   render() {
-    let currentFAQ = ["How to play?", "What is Device information about?", "Why would I login?"];
+    let currentFAQ = ["How to play?", "How to play with a keyboard?", "What is Device information about?", "Why would I login?"];
     if (this.props.helplist) {
       currentFAQ=this.props.helplist;
     }
