@@ -29,13 +29,12 @@ class GameList extends React.Component {
 
   renderData(){
     if (this.state.searching) return <div><br /><center><span>Loading</span> <Spinner style={{verticalAlign:"middle"}} animation="grow"/></center></div>
-    if (this.state.gamesList.length===0){
-      return <ListGroup><ListGroup.Item>No items found</ListGroup.Item></ListGroup>;
-    }
+    if (this.state.gamesList.length===0){return <ListGroup><ListGroup.Item>No items found</ListGroup.Item></ListGroup>;}
+    let listFunction = this.props.function; //depending on where it comes from you may be editing the list or playing the game
     return (
       <ListGroup>
         {this.state.gamesList.map((item) => (
-          <ListGroup.Item key={item.key} action href={`/play?id=${item.key}`}>{item.name}
+          <ListGroup.Item key={item.key} action href={`/${listFunction}?id=${item.key}`}>{item.name}
             <span className="float-right"><ChevronRight /></span>
           </ListGroup.Item>
         ))}

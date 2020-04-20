@@ -1,8 +1,11 @@
-import {isTest, testList, testItems} from '../utils';
+import {isTest, testList, testItems} from '../components/utils';
 class ListService {
   constructor(props){
     this.test = isTest();
     this.baseURL = window.location.origin;
+    if (process.env.REACT_APP_SUB_BASE!==""){
+      this.baseURL += "/"+process.env.REACT_APP_SUB_BASE;
+    }
   }
 
   searchList({api, searchString, results}){
@@ -14,7 +17,7 @@ class ListService {
         results(data);
       })
     } else {
-      console.log("Test mode returning test list");
+      console.log("Test mode returning test list (NOT from "+this.baseURL+")");
       results(testList());
     }
   }

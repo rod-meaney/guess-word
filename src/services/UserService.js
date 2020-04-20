@@ -1,4 +1,4 @@
-import {isTest} from '../utils';
+import {isTest} from '../components/utils';
 class UserService {
   constructor(props){
     this.test = isTest();

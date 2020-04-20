@@ -26,7 +26,7 @@ class FAQ extends React.Component {
           <p>When you start a game by pressing the play button the list you have selected to play</p>
           <ul>
             <li>You will have 3 seconds to place the device (recommend phone) longways on your forehead facing other people in the ready position.</li>
-            <li>They need make you say the word on the screen without saying all or any part of the word.</li>
+            <li>They need to make you say the word on the screen without saying all or any part of the word.</li>
             <li>If you get it correct, roll the device so it would be face down for 1/2 a second.  Then roll it back up to the ready position.</li>
             <li>If you get it incorrect, roll the device so it would be face up for 1/2 a second.  Then roll it back down to the ready position.</li>
             <li>Note: there has to be at least 1.5 seconds between marking correct or incorrect.</li>

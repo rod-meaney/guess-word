@@ -1,6 +1,6 @@
 import React from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
-import {approx} from '../../utils';
+import {approx} from '../utils';
 
 const OrientationDisplay = ({event}) => {
   

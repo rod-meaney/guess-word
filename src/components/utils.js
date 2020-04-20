@@ -1,6 +1,6 @@
 import React from 'react';
-import linkedin from './images/linkedin.png';
-import github from './images/github.png';
+import linkedin from '../images/linkedin.png';
+import github from '../images/github.png';
 import Image from 'react-bootstrap/Image';
 export function footer(){
   return (
