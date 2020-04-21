@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 const OrientationTest = ({canPlay, handleOrientation}) => {
-  const [availableMessage, setAvailableMessage] = useState(<Alert variant="info">You have not requested orientation yet. To play this game click the 'Request orientation access' button or use the menu to play with a keboard on a computer.</Alert>);
+  const [availableMessage, setAvailableMessage] = useState(<Alert variant="info">Your device needs to approve access to orientation events for this website. To play this game click the 'Device orientation access' button or use the menu to play with a keboard on a computer.</Alert>);
 
   const handleRequestOrientationButton = () => {
     if (window.DeviceOrientationEvent) {
@@ -49,7 +49,7 @@ const OrientationTest = ({canPlay, handleOrientation}) => {
     if (canPlay) {
       return <Link to="/public-game-list"><Button variant="primary">Start playing</Button></Link>
     } else {
-      return (<Button onClick={() => handleRequestOrientationButton()} variant="dark">Request orientation access</Button>);
+      return (<Button onClick={() => handleRequestOrientationButton()} variant="dark">Device orientation access</Button>);
     }
   }
 

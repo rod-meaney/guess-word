@@ -33,7 +33,7 @@ class HomePage extends React.Component {
           <Card.Body>
           <Card.Title>What-word-is-that!</Card.Title>
             <Card.Text>
-              A game of guessing fun for all the family and your crazy friends. <br />
+              Stick your phone on your forhead and try get the people around you to make you say the word on the phone.<br />
             </Card.Text>
             <OrientationTest canPlay={this.state.canPlay} handleOrientation={this.handleOrientation.bind(this)} />
             <Accordion>
