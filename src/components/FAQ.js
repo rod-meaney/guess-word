@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ListGroup from 'react-bootstrap/ListGroup';
+import GameTime from './game/GameTime';
 
 /*
 TO-DO Put all this data in a database :-)
@@ -33,6 +34,14 @@ class FAQ extends React.Component {
             <li>After 60 seconds, check your score.</li>
           </ul>
           </>);
+
+      case "How long is a game?":
+        return (
+          <>
+            <p>By defualt the game lasts for 60 seconds, but you can change how long it lasts here.</p>
+            <GameTime />
+          </>
+        )
 
       case "How to play with a keyboard?":
         return(<>
@@ -74,7 +83,7 @@ class FAQ extends React.Component {
   }
 
   render() {
-    let currentFAQ = ["How to play?", "How to play with a keyboard?", "What is Device information about?", "Why would I login?"];
+    let currentFAQ = ["How to play?", "How to play with a keyboard?", "What is Device information about?", "How long is a game?", "Why would I login?"];
     if (this.props.helplist) {
       currentFAQ=this.props.helplist;
     }
