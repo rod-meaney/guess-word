@@ -113,17 +113,13 @@ class GamePage extends React.Component {
               <Button variant="primary" onClick={() => this.startGame()}>Play</Button>
               <br /><br />
               <Row>
-                <Col xs="2"></Col>
-                <Col xs="8">
+                <Col xs="12">
                   <center>Game time : {this.state.gameTiming} seconds</center>
                 </Col>
-                <Col xs="2"></Col>
               </Row>
               <center>
               <Row>
-                <Col xs="2">10</Col>
-                <Col xs="8">
-                  
+                <Col xs="12">
                   <RangeSlider
                     value={this.state.gameTiming}
                     onChange={slideStop => this.handleSlide(parseInt(slideStop.target.value))}
@@ -131,8 +127,11 @@ class GamePage extends React.Component {
                     max={120}
                     step={10}
                   />
-                  
                 </Col>
+              </Row>
+              <Row>
+                <Col xs="2">10</Col>
+                <Col xs="8"></Col>
                 <Col xs="2">120</Col>
               </Row>
               </center>
