@@ -40,6 +40,7 @@ class FAQ extends React.Component {
           <>
             <p>By defualt the game lasts for 60 seconds, but you can change how long it lasts here.</p>
             <GameTime />
+            <p><br /><br />Note: this configuration is set per device so will not be consistent between devices.</p>
           </>
         )
 
