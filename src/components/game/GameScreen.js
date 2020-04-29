@@ -1,11 +1,14 @@
 import React from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import Countdown from 'react-countdown';
 
 class GameScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      startTime:Date.now() + 60000,
+      startTime:Date.now() + (this.props.gameTime*1000),
       answerLastPlayed:new Date(),
       answerTimeDiff:1500,
       answerDegreeVar:25,
@@ -71,7 +74,8 @@ class GameScreen extends React.Component {
       return <span>Done</span>;
     } else {
       // Render a countdown
-      return <span>{(minutes*60)+seconds} seconds</span>;
+      //return <span>{(minutes*60)+seconds} seconds</span>;
+      return <ProgressBar animated min={0} max={this.props.gameTime} now={(minutes*60)+seconds} />
     }
   };
 
@@ -81,10 +85,15 @@ class GameScreen extends React.Component {
         <br />
         <h1>{this.props.displayWord}</h1>
         {"Time remaining: "}
-        <Countdown 
+        <Row>
+          <Col xs="12">
+          <Countdown 
           date={this.state.startTime} 
           onComplete={this.props.countdownComplete}
-          renderer={this.clockRenderer}/>
+          renderer={this.clockRenderer.bind(this)}/>
+          </Col>
+        </Row>
+        
         <br /><br />
       </>
     )

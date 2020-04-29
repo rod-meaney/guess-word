@@ -1,8 +1,12 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
-import "../components/game/Game.css"
+import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import RangeSlider from 'react-bootstrap-range-slider';
+//import "../components/game/Game.css"
 import FAQ from '../components/FAQ';
 import ReadySetGoScreen from '../components/game/ReadySetGoScreen';
 import GameScreen from '../components/game/GameScreen';
@@ -23,11 +27,14 @@ The game page is fundamentally
 class GamePage extends React.Component {
   constructor(props){
     super(props);
+    let getTime = localStorage.getItem('gameTime');
+    if (getTime === null) {getTime=60;} else {getTime=parseInt(getTime);}
     this.state = {
       phase:"screen",
       currentWord:"",
       mdShow:false,
       errorMsg:"",
+      gameTiming:getTime
     }
     this.game = new Game();
     this.listService = new ListService();
@@ -74,6 +81,7 @@ class GamePage extends React.Component {
       } else {
         return <GameScreen 
           ref={this.gameScreenRef}
+          gameTime={this.state.gameTiming}
           correct={this.handleCorrect.bind(this)}
           wrong={this.handleWrong.bind(this)}
           displayWord={this.state.currentWord}
@@ -81,6 +89,11 @@ class GamePage extends React.Component {
         />
       }
     }
+  }
+
+  handleSlide(time){
+    this.setState({gameTiming:time});
+    localStorage.setItem('gameTime', time);
   }
 
   render() {
@@ -99,6 +112,31 @@ class GamePage extends React.Component {
               </Card.Text>
               <Button variant="primary" onClick={() => this.startGame()}>Play</Button>
               <br /><br />
+              <Row>
+                <Col xs="2"></Col>
+                <Col xs="8">
+                  <center>Game time : {this.state.gameTiming} seconds</center>
+                </Col>
+                <Col xs="2"></Col>
+              </Row>
+              <center>
+              <Row>
+                <Col xs="2">10</Col>
+                <Col xs="8">
+                  
+                  <RangeSlider
+                    value={this.state.gameTiming}
+                    onChange={slideStop => this.handleSlide(parseInt(slideStop.target.value))}
+                    min={10}
+                    max={120}
+                    step={10}
+                  />
+                  
+                </Col>
+                <Col xs="2">120</Col>
+              </Row>
+              </center>
+              <br /><br />
               <FAQ helplist={["How to play?", "How to play with a keyboard?"]} />
             </Card.Body>
             <Modal
@@ -106,11 +144,12 @@ class GamePage extends React.Component {
               show={this.state.mdShow}
             >
               <Modal.Body>
-                {this.modalBody()}
+              <center>{this.modalBody()}</center>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={() => this.finished()}>Close</Button>
               </Modal.Footer>
+              
             </Modal>
           </Card>
         );
