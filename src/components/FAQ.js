@@ -70,11 +70,12 @@ class FAQ extends React.Component {
 
       case "Why would I login?":
         return(<>
-          <p>Login uses Google Authentication?</p>
+          <p>Login uses Google Authentication currently.</p>
           <p>The application developer has no control over this and has no access to your google information.  The application uses google authentication for the following functionality:</p>
           <ul>
             <li>Allow you to create your own lists. If you want you can make it so only YOU see them (make them private)</li>
             <li>Future functionality. The ability to rate lists then find your favourite lists, and anything else people may come up with.</li>
+            <li><b>NOTE: </b>If you are using this in a test system, the option to login will not be available.  Currently AWS implmentation is a test implementation.</li>
           </ul>
           </>);
 

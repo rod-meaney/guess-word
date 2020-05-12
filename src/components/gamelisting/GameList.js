@@ -3,8 +3,9 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import {ChevronRight} from 'react-bootstrap-icons';
-import ListService from '../../services/ListService'
-import SearchBox from './SearchBox'
+import ListService from '../../services/ListService';
+import SearchBox from './SearchBox';
+import {Link} from "react-router-dom";
 
 class GameList extends React.Component {
   constructor(props){
@@ -34,9 +35,9 @@ class GameList extends React.Component {
     return (
       <ListGroup>
         {this.state.gamesList.map((item) => (
-          <ListGroup.Item key={item.key} action href={`/${listFunction}?id=${item.key}`}>{item.name}
-            <span className="float-right"><ChevronRight /></span>
-          </ListGroup.Item>
+            <ListGroup.Item as={Link} key={item.key} to={`/${listFunction}/${item.key}`} action>{item.name}
+              <span className="float-right"><ChevronRight /></span>
+            </ListGroup.Item>
         ))}
       </ListGroup>
     )

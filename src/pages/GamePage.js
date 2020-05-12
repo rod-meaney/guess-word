@@ -45,7 +45,8 @@ class GamePage extends React.Component {
   gameErrorHandle(error){this.setState({errorMsg:error,phase:"error"});}
 
   componentDidMount() {
-    let parts = window.location.href.split('?id=');
+    //let parts = window.location.href.split('?id=');
+    let parts = window.location.href.split('/');
     let id = parts[parts.length-1];
     this.listService.getList({key:id, result:this.gameReturnHandle.bind(this), error:this.gameErrorHandle.bind(this)});
   }

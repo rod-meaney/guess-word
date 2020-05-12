@@ -7,7 +7,8 @@ import GamePage from './pages/GamePage';
 import GamesListPublicPage from './pages/GamesListPublicPage';
 import GamesListMyPage from './pages/GamesListMyPage';
 import {Person, PersonFill} from 'react-bootstrap-icons';
-import UserService from './services/UserService'
+import UserService from './services/UserService';
+import {isTest} from './components/utils';
 
 import {
   BrowserRouter as Router,
@@ -23,6 +24,7 @@ import './App.css';
  * npm install react-bootstrap bootstrap
  * npm install react-bootstrap-icons --save
  * npm install react-router-dom
+ * npm install react-bootstrap-range-slider
  * 
  * 
  * === Heavily relied upon references
@@ -85,7 +87,7 @@ class App extends React.Component{
         <NavDropdown.Item href="/edit/">Manage my games</NavDropdown.Item>
         <NavDropdown.Item><PersonFill /> {this.state.user}</NavDropdown.Item>
         </>);
-    } else {
+    } else if (!isTest()) {
       return (<>
         <NavDropdown.Divider />
         <NavDropdown.Item href="/edit/logged-in"><Person /> {this.state.user}</NavDropdown.Item>
@@ -107,9 +109,8 @@ class App extends React.Component{
             <Navbar.Brand as={Link} to="/">WWiT</Navbar.Brand>
           </Navbar>
           {/* A <Switch> looks through its children <Route>s and renders the first one that matches the current URL. */}
-
           <Switch>
-            <Route path="/play">
+            <Route path="/play/:id">
               <GamePage />
             </Route>
             <Route path="/public-game-list">
