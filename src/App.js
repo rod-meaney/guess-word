@@ -68,6 +68,7 @@ class App extends React.Component{
       errorMsg:""
     }
     this.userService = new UserService();
+    this.retrievedUser = this.retrievedUser.bind(this);
   }  
 
   retrievedUser(rUser) {
@@ -76,7 +77,7 @@ class App extends React.Component{
   }
 
   componentDidMount(){
-    this.userService.getUser({defaultUser:this.state.user, gotUser:this.retrievedUser.bind(this)});
+    this.userService.getUser({defaultUser:this.state.user, gotUser:this.retrievedUser});
   }
 
   loginDisplay(){

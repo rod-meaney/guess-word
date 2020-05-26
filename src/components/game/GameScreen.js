@@ -17,6 +17,7 @@ class GameScreen extends React.Component {
       ori_z:0,
       windowWith: window.innerWidth,
     }
+    this.clockRenderer = this.clockRenderer.bind(this);
   }
 
   //Handles the phone orientation and keyboard pressing if using a computer
@@ -90,7 +91,7 @@ class GameScreen extends React.Component {
           <Countdown 
           date={this.state.startTime} 
           onComplete={this.props.countdownComplete}
-          renderer={this.clockRenderer.bind(this)}/>
+          renderer={this.clockRenderer}/>
           </Col>
         </Row>
         

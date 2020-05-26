@@ -19,13 +19,15 @@ class GameList extends React.Component {
       searching:false
     }
     this.listService = new ListService();
+    this.didGetData = this.didGetData.bind(this);
+    this.handleSeachTextUpdate = this.handleSeachTextUpdate.bind(this);
   }
 
   didGetData(data){this.setState({gamesList:data, serverFetchedGames:data, searching:false});}
   
   componentDidMount(){
     this.setState({searching:true});
-    this.listService.searchList({api:this.state.api, searchString:this.state.searchString, results:this.didGetData.bind(this)})
+    this.listService.searchList({api:this.state.api, searchString:this.state.searchString, results:this.didGetData})
   }
 
   renderData(){
@@ -48,10 +50,10 @@ class GameList extends React.Component {
     //Once we have returned 3 characters we 
     if (this.state.searchString.length===0) {
       //search server when it returns to 0
-      this.listService.searchList({api:this.state.api, searchString:this.state.searchString, results:this.didGetData.bind(this)});
+      this.listService.searchList({api:this.state.api, searchString:this.state.searchString, results:this.didGetData});
     } else if (this.state.searchString.length===3 && this.state.searchLengthPrev===2) {
       //Search server when they go from 2-3 chars
-      this.listService.searchList({api:this.state.api, searchString:this.state.searchString, results:this.didGetData.bind(this)})
+      this.listService.searchList({api:this.state.api, searchString:this.state.searchString, results:this.didGetData})
     } else if (this.state.searchString.length===3) {
       //Return it to the original server search as we have reached 3 from 4 characters
       this.setState({gamesList:this.state.serverFetchedGames});
@@ -75,7 +77,7 @@ class GameList extends React.Component {
       <Card>
         <Card.Body>
         <Card.Title>{this.props.title}</Card.Title>
-          {this.props.search ? <SearchBox updateSearchText={this.handleSeachTextUpdate.bind(this)} /> : ""}
+          {this.props.search ? <SearchBox updateSearchText={this.handleSeachTextUpdate} /> : ""}
           {this.renderData()}
         </Card.Body>
       </Card>

@@ -15,6 +15,7 @@ class FAQ extends React.Component {
       showHelp:false,
       currentHelp:""
     }
+    this.handleCloseHelp = this.handleCloseHelp.bind(this);
   }
 
   handleCloseHelp(){this.setState({showHelp:false});}
@@ -95,7 +96,7 @@ class FAQ extends React.Component {
           <ListGroup.Item key={item} action onClick={() => this.handleShowHelp(item)}>{item}</ListGroup.Item>
         ))}
         </ListGroup>
-        <Modal show={this.state.showHelp} onHide={this.handleCloseHelp.bind(this)}>
+        <Modal show={this.state.showHelp} onHide={this.handleCloseHelp}>
           <Modal.Header closeButton>
             <Modal.Title>{this.state.currentHelp}</Modal.Title>
           </Modal.Header>
@@ -103,7 +104,7 @@ class FAQ extends React.Component {
             {this.content()}
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleCloseHelp.bind(this)}>
+            <Button variant="secondary" onClick={this.handleCloseHelp}>
               Close
             </Button>
           </Modal.Footer>

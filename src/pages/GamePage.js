@@ -30,6 +30,14 @@ class GamePage extends React.Component {
     }
     this.game = new Game();
     this.listService = new ListService();
+    this.gameReturnHandle = this.gameReturnHandle.bind(this);
+    this.gameErrorHandle = this.gameErrorHandle.bind(this);
+    this.finishedReadySet = this.finishedReadySet.bind(this);
+    this.handleCorrect = this.handleCorrect.bind(this);
+    this.handleWrong = this.handleWrong.bind(this);
+    this.timesUp = this.timesUp.bind(this);
+    this.handlePlayAgain = this.handlePlayAgain.bind(this);
+
   }
 
   gameTime(){
@@ -48,7 +56,7 @@ class GamePage extends React.Component {
     //let parts = window.location.href.split('?id=');
     let parts = window.location.href.split('/');
     let id = parts[parts.length-1];
-    this.listService.getList({key:id, result:this.gameReturnHandle.bind(this), error:this.gameErrorHandle.bind(this)});
+    this.listService.getList({key:id, result:this.gameReturnHandle, error:this.gameErrorHandle});
   }
 
   finished(){this.setState({phase:"finished",mdShow:false});}
@@ -72,7 +80,7 @@ class GamePage extends React.Component {
 
   modalBody(){
     if (this.state.readySet){
-      return <ReadySetGoScreen finished={this.finishedReadySet.bind(this)} />
+      return <ReadySetGoScreen finished={this.finishedReadySet} />
     } else {
       if (this.state.phase==="times up"){
         return <h1>Time is up!</h1>
@@ -80,10 +88,10 @@ class GamePage extends React.Component {
         return <GameScreen 
           ref={this.gameScreenRef}
           gameTime={this.gameTime()}
-          correct={this.handleCorrect.bind(this)}
-          wrong={this.handleWrong.bind(this)}
+          correct={this.handleCorrect}
+          wrong={this.handleWrong}
           displayWord={this.state.currentWord}
-          countdownComplete={this.timesUp.bind(this)}
+          countdownComplete={this.timesUp}
         />
       }
     }
@@ -97,7 +105,7 @@ class GamePage extends React.Component {
   render() {
     switch (this.state.phase) {
       case "finished":
-        return <FinishedScreen game={this.game} playAgain={this.handlePlayAgain.bind(this)} />;
+        return <FinishedScreen game={this.game} playAgain={this.handlePlayAgain} />;
       case "error":
         return <ErrorScreen errorMsg={this.state.errorMsg} />;        
       default:
