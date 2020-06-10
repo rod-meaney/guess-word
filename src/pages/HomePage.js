@@ -14,11 +14,10 @@ class HomePage extends React.Component {
       orientationEvent:null,
       canPlay:false,
     }
-    this.handleOrientation = this.handleOrientation(this);
   }
 
-  componentDidMount(){window.addEventListener("deviceorientation", this.handleOrientation);}
-  componentWillUnmount(){window.removeEventListener('deviceorientation', this.handleOrientation);}
+  componentDidMount(){window.addEventListener("deviceorientation", this.handleOrientation.bind(this));}
+  componentWillUnmount(){window.removeEventListener('deviceorientation', this.handleOrientation.bind(this));}
 
   handleOrientation = (event) => {
     this.setState({
@@ -36,7 +35,7 @@ class HomePage extends React.Component {
             <Card.Text>
               Stick your phone on your forhead and try get the people around you to make you say the word on the phone.<br />
             </Card.Text>
-            <OrientationTest canPlay={this.state.canPlay} handleOrientation={this.handleOrientation} />
+            <OrientationTest canPlay={this.state.canPlay} handleOrientation={this.handleOrientation.bind(this)} />
             <Accordion>
               <Card>
                 <Card.Header>
