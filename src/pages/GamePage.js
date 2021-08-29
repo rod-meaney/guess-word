@@ -97,6 +97,19 @@ class GamePage extends React.Component {
     }
   }
 
+  modalFooter() {
+    if (this.state.readySet || this.state.phase==="times up"){
+      return <Button variant="secondary" onClick={() => this.finished()}>Close</Button>
+    } else {
+      //Playing
+      return <>
+          <Button variant="success" onClick={() => this.handleCorrect()}>Yes</Button>
+          <Button variant="danger" onClick={() => this.handleWrong()}>No</Button>          
+          <Button variant="secondary" onClick={() => this.finished()}>Close</Button>
+        </ >
+    }
+  }
+
   handleSlide(time){
     this.setState({gameTiming:time});
     localStorage.setItem('gameTime', time);
@@ -125,10 +138,10 @@ class GamePage extends React.Component {
               show={this.state.mdShow}
             >
               <Modal.Body>
-              <center>{this.modalBody()}</center>
+                <center>{this.modalBody()}</center>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={() => this.finished()}>Close</Button>
+                {this.modalFooter()}
               </Modal.Footer>
             </Modal>
           </Card>
